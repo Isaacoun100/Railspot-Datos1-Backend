@@ -1,6 +1,6 @@
 package com.itcr.datos.railspot.dataStructures;
 
-public class AVLTree<T extends Comparable<T>>
+public class AVLTree<T>
 {
     NodeAVL<T> root;
 
@@ -241,4 +241,6 @@ public class AVLTree<T extends Comparable<T>>
         }
         return sb;
     }
+
+    public void clear(){ this.root=null; }
 }
