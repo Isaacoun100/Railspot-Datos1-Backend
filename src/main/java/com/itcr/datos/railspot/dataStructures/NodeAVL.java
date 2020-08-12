@@ -1,6 +1,6 @@
 package com.itcr.datos.railspot.dataStructures;
 
-public class NodeAVL<T extends Comparable<T>> {
+public class NodeAVL<T> {
     private T data;
     private int key, height;
     private NodeAVL<T> left;

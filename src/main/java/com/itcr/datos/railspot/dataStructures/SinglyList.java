@@ -241,12 +241,12 @@ public class SinglyList<T> extends LinkedList<T> {
         return result;
     }
 
+
     /**
      * Prints the list with its attributes, from the first to the last value.
-     *
      * @return Returns true if there's no problems with printing the list, false if there is.
      */
-    public void print_list() {
+    public void print() {
         System.out.println("-----------------------------------------------------------------------------------------");
         System.out.println("First: " + this.head.getData());
         System.out.println("Last: " + this.getLast().getData());
@@ -254,19 +254,21 @@ public class SinglyList<T> extends LinkedList<T> {
         StringBuilder result = new StringBuilder("[");
 
         SinglyNode<T> tmp = (SinglyNode<T>) this.head;
-        if (tmp.getNext() == null) {
+        if (tmp.getNext() == null){
             result.append(tmp.getData()).append("]");
-        } else {
+        }
+        else {
             while (tmp != null) {
-                if (tmp.getNext() == null) {
+                if (tmp.getNext() == null){
                     result.append(tmp.getData()).append("]");
-                } else {
-                    result.append(tmp.getData()).append(", ");
                 }
+                else {
+                    result.append(tmp.getData()).append(", ");}
                 tmp = (SinglyNode<T>) tmp.getNext();
             }
         }
         System.out.println(result);
         System.out.println("-----------------------------------------------------------------------------------------");
     }
+
 }
