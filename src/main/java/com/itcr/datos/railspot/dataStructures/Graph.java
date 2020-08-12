@@ -41,8 +41,7 @@ public class Graph<T>{
 
     public GraphNode<T> searchVertex(T data){
         for (int i = 0; i < vertexList.getLength(); i++){
-            boolean bool = vertexList.get(i).getData().compareTo((GraphNode<T>) data)== 0;
-            if (bool) {
+            if (vertexList.get(i).getData().compareTo((GraphNode<T>) data)== 0) {
                 return vertexList.get(i).getData();
             }
         }
