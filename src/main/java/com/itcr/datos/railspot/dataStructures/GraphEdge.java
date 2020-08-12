@@ -6,20 +6,20 @@ public class GraphEdge<T> {
     private GraphNode<T> toNodeIndex;
     private int weight;
 
-    public GraphEdge(T fromNode, T toNode, int weight, Graph<T> graph){
-        fromNodeIndex = weightedGraph.searchVertex(fromNode);
+    public GraphEdge(T vertex1, T vertex2, int weight, Graph<T> graph){
+        fromNodeIndex = weightedGraph.searchVertex(vertex1);
         if (fromNodeIndex == null)
         {
-            fromNodeIndex = new GraphNode<T>(fromNode);
+            fromNodeIndex = new GraphNode<T>(vertex1);
             graph.getVertexList().add(fromNodeIndex);
         }
-        toNodeIndex = graph.searchVertex(toNode);
+        toNodeIndex = graph.searchVertex(vertex2);
         if (toNodeIndex == null) {
-            toNodeIndex = new GraphNode<T>(toNode);
+            toNodeIndex = new GraphNode<T>(vertex2);
             graph.getVertexList().add(toNodeIndex);
         }
-        this.weightedGraph = graph;
         this.weight = weight;
+        this.weightedGraph = graph;
 
         toNodeIndex.addVertexIncoming(fromNodeIndex);
         fromNodeIndex.addVertexOutgoing(toNodeIndex);
