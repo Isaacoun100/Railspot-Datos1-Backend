@@ -16,15 +16,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Class used for managing the user AVL tree
+ */
 public class UserTree {
 
     public static AVLTree<User> userTree;
 
+    /**
+     * Funcion that instatiates the user tree
+     */
     public static void initUserTree(){
         userTree = new AVLTree<>();
         updateUserList();
     }
 
+    /**
+     * Function that reads the JSON
+     */
     public static void updateUserList(){
         userTree.clear();
 
@@ -39,6 +48,10 @@ public class UserTree {
         }
     }
 
+    /**
+     * Function that
+     * @param jsonObject
+     */
     private static void getBranch(JSONObject jsonObject){
         User newUser = new User();
 
@@ -63,6 +76,11 @@ public class UserTree {
         }
     }
 
+    /**
+     * Method that casts an object into a JSON array
+     * @param object the object
+     * @return returns the JSON array
+     */
     @SuppressWarnings("unchecked")
     public static JSONArray objectToJSONArray(Object object){
         JSONArray jsonArray = new JSONArray();
@@ -79,19 +97,39 @@ public class UserTree {
         return jsonArray;
     }
 
+    /**
+     * Function that puts and object into a JSON array
+     * @param object a new object
+     * @return returns a JSON array with the object
+     */
     @SuppressWarnings("unchecked")
     public static ArrayList<Object> objectArray(Object object){
         return (ArrayList<Object>) object;
     }
 
+    /**
+     * Function that adds a new user
+     * @param user the object user
+     */
     public static void addUser(User user){
         userTree.add(user, user.getID());
     }
 
+    /**
+     * Function for searching the user
+     * @param ID the integer for searching the user
+     * @return returns search user function with a new parameter
+     */
     public static NodeAVL<User> searchUser(int ID){
         return searchUser(ID, userTree.getRoot());
     }
 
+    /**
+     * Recursive function for searching for the user
+     * @param ID the ID of the user searched
+     * @param root the new node AVL
+     * @return returns null
+     */
     private static NodeAVL<User> searchUser(int ID, NodeAVL<User> root){
         if(root.getData().getID()==ID){ return root; }
         else if(root.getData().getID()>ID){
@@ -103,6 +141,9 @@ public class UserTree {
         return null;
     }
 
+    /**
+     * Function that stores the user into the JSON
+     */
     public static void saveUser(){
         try(FileWriter file = new FileWriter("res/data/Users.json")){
             file.write(binaryTravel(userTree.getRoot(), new JSONObject()).toString());
@@ -133,6 +174,11 @@ public class UserTree {
         return jsonObject;
     }
 
+    /**
+     * Function for casting user into JSON
+     * @param user the new node avl
+     * @return returns an json object
+     */
     @SuppressWarnings("unchecked")
     public static JSONObject userToJSON(NodeAVL<User> user){
         JSONObject jsonObject = new JSONObject();
