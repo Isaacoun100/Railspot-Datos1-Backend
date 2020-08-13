@@ -14,8 +14,8 @@ public class GraphNode<T>{
     public SinglyList<GraphEdge<T>> getVertex() { return vertex; }
 
     public void addEdge(GraphNode<T> from, GraphNode<T> to, int weight){
-        GraphEdge<T> toEdge =  new GraphEdge<>(to,weight);
-        GraphEdge<T> fromEdge =  new GraphEdge<>(from,weight);
+        GraphEdge<T> toEdge =  new GraphEdge<>(to,from,weight);
+        GraphEdge<T> fromEdge =  new GraphEdge<>(from, to,weight);
         from.addEdge(toEdge);
         to.addEdge(fromEdge);
 

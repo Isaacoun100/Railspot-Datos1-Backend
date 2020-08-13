@@ -1,5 +1,7 @@
 package com.itcr.datos.railspot.dataStructures;
 
+import com.itcr.datos.railspot.objects.Ticket;
+
 public class Graph<T>{
 
     private GraphNode<T> reference =null;
@@ -28,7 +30,10 @@ public class Graph<T>{
         }
     }
 
-    public GraphNode<T> search(T search){ return search(search, new SinglyList<>(), reference); }
+    public GraphNode<T> search(T search){
+        try{ return search(search, new SinglyList<>(), reference);}
+        catch (NullPointerException e){ return new GraphNode<T>(null); }
+    }
 
 
     public GraphNode<T> search(T search, SinglyList<GraphNode<T>> visited, GraphNode<T> head){
@@ -46,22 +51,71 @@ public class Graph<T>{
         return null;
     }
 
-    //public void shortestPathBetween(){ }
+    public void shortestPathBetween(){ }
 
-    //public Graph<T> dijkstra (GraphNode<T> head){ }
+//    public Graph<T> dijkstra (GraphNode<T> head){
+//        SinglyList<GraphEdge<T>> weightTable = weightList();
+//        SinglyList<GraphNode<T>> nodeTable = nodeList();
+//
+//        GraphNode<T> dijkstraGraph = reference;
+//
+//    }
 
-//    public SinglyList<GraphNode<T>> nodeList (){
-//        return nodeList(reference, new SinglyList<>());
-//    }
-//
-//    public SinglyList<GraphNode<T>> nodeList (GraphNode<T> head, SinglyList<GraphNode<T>> finalList ){
-//        if(finalList.contains(head)){
-//
-//        }
-//        else{
-//            finalList.add(head);
-//        }
-//    }
+    public SinglyList<GraphEdge<T>> weightList (){
+
+        SinglyList<GraphNode<T>> nodeSinglyList= nodeList();
+        SinglyList<GraphEdge<T>> resultList= new SinglyList<>();
+
+        for(int i=0; i<nodeSinglyList.getLength(); i++){
+            SinglyNode<GraphNode<T>> head = nodeSinglyList.get(i);
+            for(int j=0; j<head.getData().getVertex().getLength(); j++){
+                GraphEdge<T> ticket = head.getData().getVertex().get(j).getData();
+                if(!resultList.contains(ticket)){ resultList.add(ticket); }
+            }
+        }
+        return resultList;
+
+    }
+
+    public SinglyList<GraphNode<T>> nodeList (){
+        SinglyList<GraphNode<T>> finalList = new SinglyList<>();
+        nodeList(reference, finalList);
+        return finalList;
+    }
+
+    public void nodeList (GraphNode<T> head, SinglyList<GraphNode<T>> finalList ){
+        if(!finalList.contains(head)){
+            finalList.add(head);
+            for(int i=0; i<head.getVertex().getLength(); i++){
+                nodeList(head.getVertex().get(i).getData().getGoingTo(),finalList);
+            }
+        }
+
+    }
+
+    public void deleteEdge(T fromData, T toData) {
+
+        GraphNode<T> from = search(fromData);
+        GraphNode<T> to = search(toData);
+
+        SinglyList<GraphEdge<T>> fromVertex = from.getVertex();
+        SinglyList<GraphEdge<T>> toVertex = to.getVertex();
+
+        for (int i = 0; i < fromVertex.getLength(); i++) {
+            if (fromVertex.get(i).getData().getGoingTo().equals(to) &&
+                    fromVertex.get(i).getData().getGoingFrom().equals(from)) {
+                from.getVertex().remove(i);
+            }
+        }
+
+        for (int i = 0; i < toVertex.getLength(); i++) {
+            if (toVertex.get(i).getData().getGoingTo().equals(from) &&
+                    toVertex.get(i).getData().getGoingFrom().equals(to)) {
+                to.getVertex().remove(i);
+            }
+
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -80,9 +134,9 @@ public class Graph<T>{
 
         newGraph.addReference(eredia);
 
-        newGraph.printGraph();
+        newGraph.deleteEdge("EREDIA","Cartucho");
 
-        System.out.println("Cartucho y su info es: "+newGraph.search("Cartucho"));
+        newGraph.weightList().print();
 
     }
 
