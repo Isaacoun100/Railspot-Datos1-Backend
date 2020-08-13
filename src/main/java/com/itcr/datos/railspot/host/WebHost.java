@@ -1,5 +1,6 @@
 package com.itcr.datos.railspot.host;
 
+import com.itcr.datos.railspot.dataStructures.GraphNode;
 import com.itcr.datos.railspot.dataStructures.NodeAVL;
 import com.itcr.datos.railspot.management.UserTree;
 import com.itcr.datos.railspot.objects.User;
@@ -24,6 +25,17 @@ public class WebHost {
             return UserTree.userToJSON(user);
         }
         catch (NullPointerException e){return UserTree.userToJSON(null);}
+    }
+
+    @GetMapping("/addEdge/{from}/{to}/{cost}")
+    public void addEdge(@PathVariable String from, @PathVariable String to, @PathVariable int cost){
+        try{
+            if (graphRoutes.search(from) != null){
+
+            }
+        }catch(NullPointerException e){
+
+        }
     }
 
 }
