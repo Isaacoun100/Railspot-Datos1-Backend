@@ -53,13 +53,15 @@ public class Graph<T>{
 
     public void shortestPathBetween(){ }
 
-//    public Graph<T> dijkstra (GraphNode<T> head){
-//        SinglyList<GraphEdge<T>> weightTable = weightList();
-//        SinglyList<GraphNode<T>> nodeTable = nodeList();
-//
-//        GraphNode<T> dijkstraGraph = reference;
-//
-//    }
+    public Graph<T> dijkstra (GraphNode<T> head){
+        SinglyList<GraphEdge<T>> weightTable = weightList();
+        SinglyList<GraphNode<T>> nodeTable = nodeList();
+
+        GraphNode<T> dijkstraGraph = reference;
+
+
+
+    }
 
     public SinglyList<GraphEdge<T>> weightList (){
 
@@ -120,22 +122,21 @@ public class Graph<T>{
     public static void main(String[] args) {
 
         Graph<String> newGraph = new Graph<String>();
-        GraphNode<String> eredia = new GraphNode<>("EREDIA");
-        GraphNode<String> alajuela = new GraphNode<>("ALAJUELA");
-        GraphNode<String> jochepe = new GraphNode<>("SAN JOCHEPE");
-        GraphNode<String> papa = new GraphNode<>("Cartucho");
-        GraphNode<String> fishyfish = new GraphNode<>("Puntarenas");
 
-        eredia.addEdge(eredia,alajuela,10);
-        eredia.addEdge(eredia,jochepe,5);
-        alajuela.addEdge(alajuela,papa,12);
-        papa.addEdge(papa, eredia,5);
-        fishyfish.addEdge(fishyfish, alajuela,50);
+        GraphNode<String> tucurrique = new GraphNode<String>("Tucurrique");
+        GraphNode<String> turrialba = new GraphNode<String>("Turrialba");
+        GraphNode<String> hatillo = new GraphNode<String>("Hatillo");
+        GraphNode<String> desamparados = new GraphNode<String>("Desamparados");
+        GraphNode<String> alajuelita = new GraphNode<String>("Alajuelita");
 
-        newGraph.addReference(eredia);
+        tucurrique.addEdge(tucurrique,turrialba,15);
+        tucurrique.addEdge(tucurrique,hatillo,25);
+        hatillo.addEdge(hatillo,desamparados,20);
+        desamparados.addEdge(desamparados,turrialba,15);
+        alajuelita.addEdge(alajuelita, hatillo,30);
 
-        newGraph.deleteEdge("EREDIA","Cartucho");
-
+        newGraph.addReference(desamparados);
+        newGraph.deleteEdge("Desamparados","Hatillo");
         newGraph.weightList().print();
 
     }
