@@ -1,97 +1,35 @@
 package com.itcr.datos.railspot.dataStructures;
 
-public class GraphNode<T> implements Comparable<GraphNode<T>>{
-    private T data;
+public class GraphNode<T>{
 
-    //Variable for djikstra not yet implemented
-    private GraphNode<T> previous = null;
-    int minSourceDistance = Integer.MAX_VALUE;
+    private final T name;
+    private SinglyList<GraphEdge<T>> vertex = new SinglyList<>();
 
-    private SinglyList<GraphNode> incoming;
-    private SinglyList<GraphNode> outgoing;
-    private int visited;
+    public GraphNode(T name) { this.name = name; }
 
-    public GraphNode(T data){
-        this.data = data;
-        incoming = new SinglyList<>();
-        outgoing = new SinglyList<>();
-        visited = -1;
-    }
+    public void setVertex(SinglyList<GraphEdge<T>> vertex) { this.vertex = vertex; }
 
+    public T getName() { return name; }
 
-    public void addVertexIncoming(GraphNode<T> vertex){
-        incoming.add(vertex);
-    }
+    public SinglyList<GraphEdge<T>> getVertex() { return vertex; }
 
-    public void addVertexOutgoing(GraphNode<T> vertex){
-        outgoing.add(vertex);
+    public void addEdge(GraphNode<T> from, GraphNode<T> to, int weight){
+        GraphEdge<T> toEdge =  new GraphEdge<>(to,weight);
+        GraphEdge<T> fromEdge =  new GraphEdge<>(from,weight);
+        from.addEdge(toEdge);
+        to.addEdge(fromEdge);
 
     }
 
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
-    }
-
-    public GraphNode<T> getPrevious() {
-        return previous;
-    }
-
-    public void setPrevious(GraphNode<T> previous) {
-        this.previous = previous;
-    }
-
-    public int getMinSourceDistance() {
-        return minSourceDistance;
-    }
-
-    public void setMinSourceDistance(int minSourceDistance) {
-        this.minSourceDistance = minSourceDistance;
-    }
-
-    public SinglyList<GraphNode> getIncoming() {
-        return incoming;
-    }
-
-    public void setIncoming(SinglyList<GraphNode> incoming) {
-        this.incoming = incoming;
-    }
-
-    public SinglyList<GraphNode> getOutgoing() {
-        return outgoing;
-    }
-
-    public void setOutgoing(SinglyList<GraphNode> outgoing) {
-        this.outgoing = outgoing;
-    }
-
-    public int getVisited() {
-        return visited;
-    }
-
-    public void setVisited(int visited) {
-        this.visited = visited;
+    public void addEdge(GraphEdge<T> edge){
+        vertex.add(edge);
     }
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Vertex: ").append(data).append(" : ").append("minD: ").append(minSourceDistance).append(" ");
-        stringBuilder.append(" In: ");
-        for (int i = 0; i < incoming.getLength(); i++) {
-            stringBuilder.append(incoming.get(i).getData().getData()).append(" ");
-        }
-        stringBuilder.append("Out: ");
-        for (int i = 0; i < outgoing.getLength(); i++) {
-            stringBuilder.append(outgoing.get(i).getData().getData()).append(" ");
-        }
-        return stringBuilder.toString();
-    }
-    @Override
-    public int compareTo(GraphNode<T> other) {
-        return Integer.compare(minSourceDistance, other.minSourceDistance);
+        return "GraphNode{" +
+                "name=" + name +
+                ", vertex=" + vertex +
+                '}';
     }
 }
