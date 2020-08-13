@@ -193,6 +193,19 @@ public class SinglyList<T> extends LinkedList<T> {
         return singlyList;
     }
 
+    public boolean contains(T data){
+        if(head==null){ return false; }
+        else { return contains(data, head); }
+    }
+
+    public boolean contains(T data, Node<T> head){
+        if(head.getData().equals(data)){ return true; }
+        else{
+            if(head.getNext()!=null){ return contains(data, head.getNext()); }
+            else { return false; }
+        }
+    }
+
     /**
      * Method for splitting the list between two values
      *
