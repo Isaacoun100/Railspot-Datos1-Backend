@@ -92,7 +92,7 @@ public class UserTree {
         return searchUser(ID, userTree.getRoot());
     }
 
-    public static NodeAVL<User> searchUser(int ID, NodeAVL<User> root){
+    private static NodeAVL<User> searchUser(int ID, NodeAVL<User> root){
         if(root.getData().getID()==ID){ return root; }
         else if(root.getData().getID()>ID){
             if(root.getRight()!=null){ searchUser(ID, root.getRight()); }
@@ -119,7 +119,7 @@ public class UserTree {
      * @return JSONObject you where looking for
      */
     @SuppressWarnings("unchecked")
-    public static JSONObject binaryTravel(NodeAVL<User> user, JSONObject jsonObject){
+    private static JSONObject binaryTravel(NodeAVL<User> user, JSONObject jsonObject){
         jsonObject=userToJSON(user);
         jsonObject.put("left", null);
         jsonObject.put("right",null);
