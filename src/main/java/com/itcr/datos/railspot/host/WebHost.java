@@ -22,7 +22,6 @@ public class WebHost {
      */
     @GetMapping("/")
     public String login(){
-        UserTree.saveUser();
         return UserTree.userTree.toString();
     }
 
