@@ -105,6 +105,7 @@ public class UserTree {
 
     public static void saveUser(){
         try(FileWriter file = new FileWriter("res/data/Users.json")){
+            System.out.println(userTree.getRoot().getData().getID());
             file.write(binaryTravel(userTree.getRoot(), new JSONObject()).toString());
             file.flush();
 

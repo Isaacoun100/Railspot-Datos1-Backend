@@ -1,10 +1,19 @@
 package com.itcr.datos.railspot.dataStructures;
 
+/**
+ * This class will we be instanced to create a new AVL Tree
+ *
+ * @param <T>
+ */
 public class AVLTree<T>
 {
     NodeAVL<T> root;
 
-    // A utility function to get height of the tree
+    /**
+     * Manages the height of the tree
+     * @param N
+     * @return
+     */
     public int height(NodeAVL<T> N)
     {
         if (N == null)
@@ -12,60 +21,83 @@ public class AVLTree<T>
         return N.getHeight();
     }
 
-    // A utility function to get maximum of two integers
+    /**
+     * Maximum value in the tree
+     * @param a
+     * @param b
+     * @return
+     */
     public int max(int a, int b)
     {
         return Math.max(a, b);
     }
 
-    // A utility function to right rotate subtree rooted with y
-    // See the diagram given above.
+    /**
+     * Right rotation for the tree
+     * @param y
+     * @return the node rotated
+     */
     public NodeAVL<T> rightRotate(NodeAVL<T> y)
     {
         NodeAVL<T> x = y.getLeft();
         NodeAVL<T> T2 = x.getRight();
 
-        // Perform rotation
         x.setRight(y);
         y.setLeft(T2);
 
-        // Update heights
         y.setHeight( max(height(y.getLeft()), height(y.getRight())) + 1);
         x.setHeight(max(height(x.getLeft()), height(x.getRight())) + 1);
 
-        // Return new root
         return x;
     }
 
-    // A utility function to left rotate subtree rooted with x
-    // See the diagram given above.
+    /**
+     * Left rotation for the tree
+     * @param y
+     * @return the node rotated
+     */
     public NodeAVL<T> leftRotate(NodeAVL<T> x)
     {
         NodeAVL<T> y = x.getRight();
         NodeAVL<T> T2 = y.getLeft();
 
-        // Perform rotation
         y.setLeft(x);
         x.setRight(T2);
 
-        // Update heights
         x.setHeight(max(height(x.getLeft()), height(x.getRight())) + 1);
         y.setHeight(max(height(y.getLeft()), height(y.getRight())) + 1);
 
-        // Return new root
         return y;
     }
 
-    // Get Balance factor of node N
+    /**
+     * This will manage the tree and its balance
+     * @param N
+     * @return the balance of the tree
+     */
     public int getBalance(NodeAVL<T> N)
     {
         if (N == null)
             return 0;
         return height(N.getLeft()) - height(N.getRight());
     }
+
+    /**
+     * This will add a new node to the tree
+     * @param data
+     * @param key
+     */
     public void add(T data, int key){
         this.root = add_aux(this.root, data, key);
     }
+
+    /**
+     * Auxiliary method for add method
+     * @param node
+     * @param data
+     * @param key
+     * @return
+     */
     public NodeAVL<T> add_aux(NodeAVL<T> node, T data, int key)
     {
         /* 1. Perform the normal BST rotation */
@@ -76,48 +108,40 @@ public class AVLTree<T>
             node.setLeft(add_aux(node.getLeft(), data, key));
         else if (key > node.getKey())
             node.setRight(add_aux(node.getRight(), data, key));
-        else // Equal keys not allowed
+        else
             return node;
 
-        /* 2. Update height of this ancestor node */
         node.setHeight(1 + max(height(node.getLeft()), height(node.getRight())));
 
-		/* 3. Get the balance factor of this ancestor
-		node to check whether this node became
-		unbalanced */
         int balance = getBalance(node);
 
-        // If this node becomes unbalanced, then
-        // there are 4 cases Left Left Case
         if (balance > 1 && key < node.getLeft().getKey())
             return rightRotate(node);
 
-        // Right Right Case
         if (balance < -1 && key > node.getRight().getKey())
             return leftRotate(node);
 
-        // Left Right Case
         if (balance > 1 && key > node.getLeft().getKey())
         {
             node.setLeft(leftRotate(node.getLeft()));
             return rightRotate(node);
         }
 
-        // Right Left Case
         if (balance < -1 && key < node.getRight().getKey())
         {
             node.setRight(rightRotate(node.getRight()));
             return leftRotate(node);
         }
 
-        /* return the (unchanged) node pointer */
         return node;
     }
 
-    /* Given a non-empty binary search tree, return the
-    node with minimum key value found in that tree.
-    Note that the entire tree does not need to be
-    searched. */
+    /**
+     * Given a non-empty binary search tree, return the node with minimum key value found in that tree.
+     * Note that the entire tree does not need to be searched.
+     * @param node
+     * @return the minimum value
+     */
     public NodeAVL<T> minValueNode(NodeAVL<T> node)
     {
         NodeAVL<T> current = node;
@@ -128,9 +152,21 @@ public class AVLTree<T>
 
         return current;
     }
+
+    /**
+     * This will delete the node of a given key
+     * @param key
+     */
     public void deleteNode(int key){
         this.root = deleteNode_aux(this.root, key);
     }
+
+    /**
+     * Auxiliary method for the delete node method
+     * @param root
+     * @param key
+     * @return
+     */
     public NodeAVL<T> deleteNode_aux(NodeAVL<T> root, int key)
     {
         // STEP 1: PERFORM STANDARD BST DELETE
@@ -223,14 +259,31 @@ public class AVLTree<T>
         return root;
     }
 
+    /**
+     * When needed this method will help convert the node into a String
+     * @return
+     */
     public String toString() {
         return this.toString(new StringBuilder(), true, new StringBuilder(),this.root).toString();
     }
+
+    /**
+     * This method will return the root of the tree
+     * @return
+     */
     public NodeAVL<T> getRoot(){
         return this.root;
     }
 
 
+    /**
+     * This method prints the tree in way that is more humane tp understand.
+     * @param prefix
+     * @param isTail
+     * @param sb
+     * @param head
+     * @return
+     */
     public StringBuilder toString(StringBuilder prefix, boolean isTail, StringBuilder sb,NodeAVL<T> head) {
         if(head.getRight()!=null) {
             sb.append(toString(new StringBuilder().append(prefix).append(isTail ? "│   " : "    "), false, new StringBuilder(), head.getRight()));
@@ -242,5 +295,9 @@ public class AVLTree<T>
         return sb;
     }
 
+
+    /**
+     * This will set the tree to blank
+     */
     public void clear(){ this.root=null; }
 }

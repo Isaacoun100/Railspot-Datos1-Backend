@@ -1,0 +1,21 @@
+{
+  "tickets": [],
+  "left": {
+    "tickets": [],
+    "left": null,
+    "ID": 123456,
+    "right": null
+  },
+  "ID": 2313486,
+  "right": {
+    "tickets": [],
+    "left": null,
+    "ID": 10111111,
+    "right": {
+      "tickets": [],
+      "left": null,
+      "ID": 987654321,
+      "right": null
+    }
+  }
+}
