@@ -6,7 +6,10 @@ public class GraphRoutes {
 
     private static  Graph<String> graphRoutes;
 
-    public static void initGraph(){ graphRoutes = new Graph<>(); }
+    public static void initGraph(){
+        graphRoutes = new Graph<>();
+        graphRoutes.printGraph();
+    }
 
     public static Graph<String> getGraph(){ return graphRoutes; }
 
