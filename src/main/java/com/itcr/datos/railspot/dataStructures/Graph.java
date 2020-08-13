@@ -28,16 +28,40 @@ public class Graph<T>{
         }
     }
 
-//    public GraphNode<T> search(T search){
-//        return search(search, new SinglyList<>(), reference);
-//    }
-//
-//    public GraphNode<T> search(T search, SinglyList<GraphNode<T>> visited, GraphNode<T> head){
-//        if(!visited.contains())
-//    }
-//
-//    public void shortestPathBetween(){ }
+    public GraphNode<T> search(T search){ return search(search, new SinglyList<>(), reference); }
 
+
+    public GraphNode<T> search(T search, SinglyList<GraphNode<T>> visited, GraphNode<T> head){
+        if(!visited.contains(head)){
+            if(head.getName().equals(search)){ return head; }
+            else{
+                visited.add(head);
+                for(int i=0; i<head.getVertex().getLength(); i++){
+                    GraphNode<T> node = search(search, visited, head.getVertex().get(i).getData().getGoingTo());
+                    if(node!=null){ return node; }
+
+                }
+            }
+        }
+        return null;
+    }
+
+    //public void shortestPathBetween(){ }
+
+    //public Graph<T> dijkstra (GraphNode<T> head){ }
+
+//    public SinglyList<GraphNode<T>> nodeList (){
+//        return nodeList(reference, new SinglyList<>());
+//    }
+//
+//    public SinglyList<GraphNode<T>> nodeList (GraphNode<T> head, SinglyList<GraphNode<T>> finalList ){
+//        if(finalList.contains(head)){
+//
+//        }
+//        else{
+//            finalList.add(head);
+//        }
+//    }
 
     public static void main(String[] args) {
 
@@ -57,6 +81,8 @@ public class Graph<T>{
         newGraph.addReference(eredia);
 
         newGraph.printGraph();
+
+        System.out.println("Cartucho y su info es: "+newGraph.search("Cartucho"));
 
     }
 
